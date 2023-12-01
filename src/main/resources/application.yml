@@ -1,0 +1,27 @@
+app:
+  potluck-sheet:
+#    version: ${project.version}
+#    build-year: ${buildYear}
+    dietary-restrictions:
+      - name: Vegan
+        color: "#d9f7be"  # Light green
+      - name: Vegetarian
+        color: "#fff2cc"  # Light yellow
+      - name: Dairy-Free
+        color: "#cce5ff"  # Light blue
+      - name: Gluten-Free
+        color: "#e6ccb3"  # Light brown
+      - name: Kosher
+        color: "#b3d9ff"  # Light blue
+      - name: Halal
+        color: "#ffd699"  # Light orange
+      - name: Diabetes
+        color: "#ffb3b3"  # Light red
+      - name: Wheat Allergy
+        color: "#fff275"  # Light yellow
+      - name: Nut Allergy
+        color: "#e066ff"  # Light purple
+      - name: Egg Allergy
+        color: "#ffc2e0"  # Light pink
+      - name: Soy Allergy
+        color: "#d9d9d9"  # Light gray

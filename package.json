@@ -1,0 +1,14 @@
+{
+  "name": "resources",
+  "version": "1.0.0",
+  "scripts": {
+    "build:postcss": "postcss ./src/main/resources/static/css/style.tailwind.css -o ./src/main/resources/static/css/style.out.tailwind.css",
+    "watch:postcss": "postcss ./src/main/resources/static/css/style.tailwind.css -o ./src/main/resources/static/css/style.out.tailwind.css -w"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.3.5"
+  }
+}
