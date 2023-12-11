@@ -1,11 +1,11 @@
-package com.lukasschreiber.potlucksheet.dietary_restrictions
+package com.lukasschreiber.potlucksheet.config
 
+import com.lukasschreiber.potlucksheet.model.repo.DietaryRestrictionRepository
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.DependsOn
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Flux
 
 @Component
 @DependsOn("dbInitializer")

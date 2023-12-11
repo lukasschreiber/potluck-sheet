@@ -1,5 +1,7 @@
-package com.lukasschreiber.potlucksheet.dietary_restrictions
+package com.lukasschreiber.potlucksheet.controller
 
+import com.lukasschreiber.potlucksheet.model.DietaryRestriction
+import com.lukasschreiber.potlucksheet.model.repo.DietaryRestrictionRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

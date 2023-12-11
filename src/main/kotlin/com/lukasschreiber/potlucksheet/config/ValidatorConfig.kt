@@ -1,4 +1,4 @@
-package com.lukasschreiber.potlucksheet.auth
+package com.lukasschreiber.potlucksheet.config
 
 import org.hibernate.validator.HibernateValidator
 import org.springframework.context.annotation.Bean

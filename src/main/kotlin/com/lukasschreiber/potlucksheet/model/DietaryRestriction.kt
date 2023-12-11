@@ -1,4 +1,4 @@
-package com.lukasschreiber.potlucksheet.dietary_restrictions
+package com.lukasschreiber.potlucksheet.model
 
 import java.util.*
 import org.springframework.data.annotation.Id

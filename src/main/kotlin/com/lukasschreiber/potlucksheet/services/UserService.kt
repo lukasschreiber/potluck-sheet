@@ -1,5 +1,7 @@
-package com.lukasschreiber.potlucksheet.user
+package com.lukasschreiber.potlucksheet.services
 
+import com.lukasschreiber.potlucksheet.model.User
+import com.lukasschreiber.potlucksheet.model.repo.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service

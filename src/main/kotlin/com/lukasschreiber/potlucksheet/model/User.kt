@@ -1,5 +1,6 @@
-package com.lukasschreiber.potlucksheet.user
+package com.lukasschreiber.potlucksheet.model
 
+import com.lukasschreiber.potlucksheet.model.dto.UserDto
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.Size
 import org.springframework.data.annotation.Id
@@ -17,4 +18,8 @@ data class User(
     @field:NotEmpty
     @field:Size(min = 4)
     @Column var password: String = "",
-)
+) {
+    fun toDto(): UserDto {
+        return UserDto(uuid, name)
+    }
+}
