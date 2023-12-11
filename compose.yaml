@@ -1,0 +1,11 @@
+services:
+  postgres:
+    image: postgres:latest
+    restart: on-failure
+    ports:
+      - target: 5432
+        published: 5432
+    environment:
+      POSTGRES_USER: potluck
+      POSTGRES_PASSWORD: UJ250L9on9iuwpa
+      POSTGRES_DB: potluckdb
