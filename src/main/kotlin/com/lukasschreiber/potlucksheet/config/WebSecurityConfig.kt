@@ -1,7 +1,6 @@
 package com.lukasschreiber.potlucksheet.config
 
 import com.lukasschreiber.potlucksheet.model.repo.UserRepository
-import kotlinx.coroutines.reactor.mono
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,7 +15,6 @@ import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.server.SecurityWebFilterChain
-import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler
 import reactor.core.publisher.Mono
 
 
@@ -35,19 +33,9 @@ class WebSecurityConfig(@Autowired val userRepository: UserRepository) {
                 csrf.disable()
             }
             .httpBasic(Customizer.withDefaults())
-            .formLogin { login ->
-                login
-                    .loginPage("/login")
-                    .authenticationFailureHandler { exchange, _ ->
-                        Mono.fromRunnable {
-                            exchange.exchange.response.statusCode = HttpStatus.UNAUTHORIZED
-                        }
-                    }
-                    .authenticationSuccessHandler(WebFilterChainServerAuthenticationSuccessHandler())
-            }
             .logout { logout ->
                 logout
-                    .logoutUrl("/logout")
+                    .logoutUrl("/api/logout")
                     .logoutSuccessHandler { exchange, _ ->
                         Mono.fromRunnable {
                             exchange.exchange.response.statusCode = HttpStatus.OK
