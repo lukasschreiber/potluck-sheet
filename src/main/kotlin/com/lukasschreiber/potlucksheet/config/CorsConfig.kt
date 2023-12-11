@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono
 
 
 @Configuration
-class CorsConfiguration {
+class CorsConfig {
     @Bean
     fun corsFilter(): WebFilter {
         return WebFilter { ctx: ServerWebExchange, chain: WebFilterChain ->

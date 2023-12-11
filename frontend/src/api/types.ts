@@ -5,7 +5,7 @@ export interface User {
 }
 
 export interface UnregisteredUser {
-    username: string;
+    name: string;
     password: string;
 }
 
