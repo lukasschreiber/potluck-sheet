@@ -23,10 +23,11 @@ export async function register(user: UnregisteredUser): Promise<Result<null>> {
     return emptyResult(res.ok, res.status);
 }
 
-export function login(user: UnregisteredUser): Promise<Result<null>> {
-    return fetch(API_PATH + "/auth/login", {
+export async function login(user: UnregisteredUser): Promise<Result<null>> {
+    const res = await fetch(API_PATH + "/auth/login", {
         method: "POST",
         body: JSON.stringify(user),
         headers
-    }).then(res => emptyResult(res.ok, res.status));
+    });
+    return emptyResult(res.ok, res.status);
 }
