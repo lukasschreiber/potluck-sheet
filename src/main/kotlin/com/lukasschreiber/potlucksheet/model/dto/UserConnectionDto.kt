@@ -5,4 +5,3 @@ data class UserConnectionDto(
     val user: UserDto?
 )
 
-enum class ConnectionTypes {CONNECTED, DISCONNECTED, HEARTBEAT}
