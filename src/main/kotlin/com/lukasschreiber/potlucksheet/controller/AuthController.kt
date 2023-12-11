@@ -45,10 +45,7 @@ class AuthController(
         @RequestBody @Valid user: User,
         exchange: ServerWebExchange
     ): Mono<ResponseEntity<*>> {
-        println(user)
-
         val rawPassword = user.password
-        println(user)
         return userService.registerUser(user)
             .flatMap { registeredUser ->
                 val authToken = UsernamePasswordAuthenticationToken(registeredUser.name, rawPassword)

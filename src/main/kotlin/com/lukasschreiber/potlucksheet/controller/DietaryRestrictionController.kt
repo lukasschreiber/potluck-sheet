@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import reactor.core.publisher.Flux
 import java.util.*
 
 @RestController
@@ -14,12 +15,12 @@ class DietaryRestrictionController(
     @Autowired val dietaryRestrictionRepository: DietaryRestrictionRepository,
 ) {
     @GetMapping("/dietary-restrictions/relevant")
-    fun findAllActiveAndNotNull(): ResponseEntity<List<DietaryRestriction>> {
+    fun findAllActiveAndNotNull(): ResponseEntity<Flux<DietaryRestriction>> {
         return ResponseEntity(dietaryRestrictionRepository.findAllActiveAndNotNull(), HttpStatus.OK)
     }
 
     @GetMapping("/dietary-restrictions")
-    fun findAllActive(): ResponseEntity<List<DietaryRestriction>> {
+    fun findAllActive(): ResponseEntity<Flux<DietaryRestriction>> {
         return ResponseEntity(dietaryRestrictionRepository.findAllActive(), HttpStatus.OK)
     }
 

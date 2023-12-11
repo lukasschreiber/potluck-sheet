@@ -6,6 +6,7 @@ import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.r2dbc.repository.R2dbcRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.transaction.annotation.Transactional
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.*
 
@@ -27,10 +28,10 @@ interface DietaryRestrictionRepository : R2dbcRepository<DietaryRestriction, UUI
     fun saveIfLabelNotExists(@Param("label") label: String, @Param("color") color: String): Mono<Unit>
 
     @Query(value = "SELECT * FROM dietaryrestrictions WHERE active = true AND count > 0 ORDER BY count DESC")
-    fun findAllActiveAndNotNull(): List<DietaryRestriction>
+    fun findAllActiveAndNotNull(): Flux<DietaryRestriction>
 
     @Query(value = "SELECT * FROM dietaryrestrictions WHERE active = true")
-    fun findAllActive(): List<DietaryRestriction>
+    fun findAllActive(): Flux<DietaryRestriction>
 
     @Modifying
     @Transactional
