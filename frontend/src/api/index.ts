@@ -15,10 +15,19 @@ const headers = {
 }
 
 export async function register(user: UnregisteredUser): Promise<Result<null>> {
-    const res = await fetch(API_PATH + "/auth/register", {method: "POST", body: JSON.stringify(user), headers});
+    const res = await fetch(API_PATH + "/auth/register", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers
+    });
     return emptyResult(res.ok, res.status);
 }
 
 export async function login(user: UnregisteredUser): Promise<Result<null>> {
-    return fetch(API_PATH + "/auth/login", {method: "POST", body: JSON.stringify(user), headers}).then(res => emptyResult(res.ok, res.status))
+    return fetch(API_PATH + "/auth/login", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers
+    }).then(res => emptyResult(res.ok, res.status));
 }
+
