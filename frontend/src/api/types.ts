@@ -1,6 +1,12 @@
 export interface User {
     uuid: string|null
-    username: string
+    name: string
+}
+
+export interface LoggedinUser {
+    uuid: string|null
+    name: string,
+    basicAuth: string
 }
 
 export interface UnregisteredUser {
@@ -25,4 +31,19 @@ export interface TableEntry {
     uuid: string
     value: string
     user: User
+}
+
+export interface ResponseTable {
+    uuid: String,
+    name: String,
+    description: String,
+    entries: {
+        user: User,
+        entry: {
+            uuid: String,
+            name: String,
+            tableId: String,
+            userId: String
+        }
+    }[]
 }

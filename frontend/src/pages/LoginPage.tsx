@@ -9,12 +9,19 @@ export function LoginPage() {
 
     async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+        const name = (event.currentTarget.querySelector("#name") as HTMLInputElement).value
+        const password = (event.currentTarget.querySelector("#password") as HTMLInputElement).value
+
         const result = await login({
-            name: (event.currentTarget.querySelector("#name") as HTMLInputElement).value,
-            password: (event.currentTarget.querySelector("#password") as HTMLInputElement).value
+            name: name,
+            password: password
         })
         if(result.ok && result.status == 200) {
-            auth?.login(result.body)
+            auth?.login({
+                name: result.body.name,
+                uuid: result.body.uuid,
+                basicAuth: btoa(name + ":" + password)
+            })
         } else {
             setError("Login failed, username or password are not correct.")
         }
