@@ -11,15 +11,21 @@ export function RegisterPage() {
             return;
         }
 
-        await register({username: (event.currentTarget.querySelector("#name") as HTMLInputElement).value, password: (event.currentTarget.querySelector("#password") as HTMLInputElement).value})
-        alert("Successfully registered")
+        const r = await register({
+            name: (event.currentTarget.querySelector("#name") as HTMLInputElement).value,
+            password: (event.currentTarget.querySelector("#password") as HTMLInputElement).value
+        })
+        let msg: string
+        if (r.ok && r.status === 200) msg = "Successfully registered"
+        else msg = "Registration failed"
+        alert(msg)
     }
 
     return (
-        <form onSubmit={handleRegister}>
+        <form className={"flex flex-col"} onSubmit={handleRegister}>
             <input type="text" placeholder="Name" id="name" />
             <input type="password" placeholder="Password" id={"password"} />
-            <input type="password" placeholder="Confirm Password" id={"confirmPassword"}/>
+            <input type="password" placeholder="Confirm Password" id={"confirmPassword"} />
             <button type="submit">Register</button>
         </form>
     )
