@@ -26,7 +26,7 @@ class UserController(@Autowired val userService: UserService) {
         val formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy")
         return Flux.interval(Duration.ofSeconds(5))
             .map { value: Long ->
-                value.toString() + ": " + LocalDateTime.ofInstant(
+                "$value: " + LocalDateTime.ofInstant(
                     Instant.ofEpochMilli(System.currentTimeMillis()),
                     ZoneId.systemDefault()
                 ).format(formatter)
@@ -46,7 +46,6 @@ class UserController(@Autowired val userService: UserService) {
                 }
             }
 
-        println(userService.getActiveUsers())
         val allConnectedUsersFlux = Flux.fromIterable(userService.getActiveUsers())
 
         return Flux.merge(allConnectedUsersFlux, newUserFlux)
