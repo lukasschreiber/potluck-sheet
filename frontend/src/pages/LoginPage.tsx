@@ -1,19 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import {login} from "../api";
+import {Link} from "react-router-dom";
+import {useAuth} from "../hooks/useAuth.tsx";
 
 export function LoginPage() {
+    const [error, setError] = useState<String|undefined>(undefined)
+    const auth  = useAuth()
 
     async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        console.log(event.currentTarget)
-        const l = await login({
+        const result = await login({
             name: (event.currentTarget.querySelector("#name") as HTMLInputElement).value,
             password: (event.currentTarget.querySelector("#password") as HTMLInputElement).value
         })
-        let msg: string
-        if (l.ok && l.status === 200) msg = "Successfully logged in"
-        else msg = "Login failed"
-        alert(msg)
+        if(result.ok && result.status == 200) {
+            auth?.login(result.body)
+        } else {
+            setError("Login failed, username or password are not correct.")
+        }
     }
 
     return (
@@ -21,6 +25,8 @@ export function LoginPage() {
             <input type="text" placeholder="Name" id="name" />
             <input type="password" placeholder="Password" id={"password"} />
             <button type="submit">Login</button>
+            {error != undefined && <div>{error}</div>}
+            <Link to={"/register"} >Register</Link>
         </form>
     )
 }

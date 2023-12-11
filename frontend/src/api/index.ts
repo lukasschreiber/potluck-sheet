@@ -1,10 +1,10 @@
-import {Result, UnregisteredUser} from "./types.ts";
+import {Result, Table, UnregisteredUser, User} from "./types.ts";
 
 function emptyResult(ok: boolean, status: number): Result<null> {
     return {
         status,
         ok,
-        success: null
+        body: null
     }
 }
 
@@ -23,11 +23,31 @@ export async function register(user: UnregisteredUser): Promise<Result<null>> {
     return emptyResult(res.ok, res.status);
 }
 
-export async function login(user: UnregisteredUser): Promise<Result<null>> {
-    return fetch(API_PATH + "/auth/login", {
+export async function login(user: UnregisteredUser): Promise<Result<User>> {
+    const response = await fetch(API_PATH + "/auth/login", {
         method: "POST",
         body: JSON.stringify(user),
         headers
-    }).then(res => emptyResult(res.ok, res.status));
+    })
+    const json = await response.json()
+    return {
+        status: response.status,
+        ok: response.ok,
+        body: json
+    }
 }
+
+export async function getTables(): Promise<Result<Table[]>> {
+    const response = await fetch(API_PATH + "/tables", {
+        method: "GET",
+        headers
+    })
+    const json = await response.json()
+    return {
+        status: response.status,
+        ok: response.ok,
+        body: json
+    }
+}
+
 

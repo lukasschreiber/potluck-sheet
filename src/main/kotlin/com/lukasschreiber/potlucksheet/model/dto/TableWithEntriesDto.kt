@@ -8,5 +8,5 @@ data class TableWithEntriesDto(
     val name: String,
     val description: String,
     val uuid: UUID,
-    val entries: List<PotluckTableEntry>
+    val entries: List<TableEntryWithUserDto>
 )

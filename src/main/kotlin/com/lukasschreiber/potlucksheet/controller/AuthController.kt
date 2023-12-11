@@ -3,6 +3,7 @@ package com.lukasschreiber.potlucksheet.controller
 import com.lukasschreiber.potlucksheet.model.User
 import com.lukasschreiber.potlucksheet.model.dto.ErrorResponse
 import com.lukasschreiber.potlucksheet.model.dto.FieldErrorDto
+import com.lukasschreiber.potlucksheet.model.dto.UserDto
 import com.lukasschreiber.potlucksheet.services.UserService
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,16 +29,18 @@ class AuthController(
     @Autowired val authenticationManager: ReactiveAuthenticationManager
 ) {
     @PostMapping("/login")
-    fun login(@RequestBody @Valid user: User): Mono<ResponseEntity<Nothing>> {
+    fun login(@RequestBody @Valid user: User): Mono<ResponseEntity<UserDto?>> {
         val authenticationToken = UsernamePasswordAuthenticationToken(user.name, user.password)
-        return authenticationManager.authenticate(authenticationToken)
-            .doOnNext { authentication -> SecurityContextHolder.getContext().authentication = authentication }
-            .flatMap { Mono.just(ResponseEntity.status(HttpStatus.ACCEPTED).body(null)) }
-            .onErrorResume {
-                Mono.just(
-                    ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
-                )
-            }
+        return userService.userRepository.findByName(user.name).flatMap { foundUser ->
+            authenticationManager.authenticate(authenticationToken)
+                .doOnNext { authentication -> SecurityContextHolder.getContext().authentication = authentication }
+                .flatMap { Mono.just(ResponseEntity.ok(foundUser.toDto())) }
+                .onErrorResume {
+                    Mono.just(
+                        ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
+                    )
+                }
+        }
     }
 
     @PostMapping("/register")
@@ -53,8 +56,8 @@ class AuthController(
                 authenticationManager.authenticate(authToken).flatMap { authentication ->
                     val context: SecurityContext = SecurityContextHolder.getContext()
                     context.authentication = authentication
-                    exchange.session.flatMap {
-                            session -> session.attributes[SecurityContext::class.java.name] = context
+                    exchange.session.flatMap { session ->
+                        session.attributes[SecurityContext::class.java.name] = context
                         val responseEntity: ResponseEntity<*> = ResponseEntity.ok<Any>(registeredUser.toDto())
                         Mono.just(responseEntity)
                     }
