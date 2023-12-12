@@ -8,5 +8,5 @@ data class TableEntrySyncDto(
 )
 
 enum class TableEntrySyncTypes {
-    UPDATED, BACKLOG, HEARTBEAT
+    UPDATED, HEARTBEAT
 }

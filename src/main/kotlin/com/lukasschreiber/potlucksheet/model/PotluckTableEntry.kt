@@ -9,8 +9,8 @@ import java.util.*
 data class PotluckTableEntry(
     @Id
     var uuid: UUID? = null,
-    @Column("name")
-    var name: String = "",
+    @Column("value")
+    var value: String = "",
     @Column("table_id")
     var tableId: UUID? = null,
     @Column("user_id")

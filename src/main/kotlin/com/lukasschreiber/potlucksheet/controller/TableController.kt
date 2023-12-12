@@ -34,7 +34,7 @@ class TableController(val tableService: ReactiveTableService, val userService: U
             tableService.updateTableEntry(
                 PotluckTableEntry(
                     tableId = tableEntry.tableId,
-                    name = tableEntry.value,
+                    value = tableEntry.value,
                     userId = user.uuid
                 )
             )

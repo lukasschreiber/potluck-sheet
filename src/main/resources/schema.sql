@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS tables
 CREATE TABLE IF NOT EXISTS entries
 (
     uuid     uuid         NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    name     varchar(255) NULL,
+    value     varchar(255) NULL,
     user_id  uuid         NOT NULL,
     table_id uuid         NOT NULL,
     FOREIGN KEY (table_id) REFERENCES tables (uuid),
