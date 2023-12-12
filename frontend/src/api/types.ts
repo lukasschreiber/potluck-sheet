@@ -3,7 +3,7 @@ export interface User {
     name: string
 }
 
-export interface LoggedinUser {
+export interface LoggedInUser {
     uuid: string|null
     name: string,
     basicAuth: string
@@ -31,19 +31,10 @@ export interface TableEntry {
     uuid: string
     value: string
     user: User
+    tableId: string
 }
 
-export interface ResponseTable {
-    uuid: String,
-    name: String,
-    description: String,
-    entries: {
-        user: User,
-        entry: {
-            uuid: String,
-            name: String,
-            tableId: String,
-            userId: String
-        }
-    }[]
+export interface ApiConfig {
+    version: String,
+    buildYear: String
 }

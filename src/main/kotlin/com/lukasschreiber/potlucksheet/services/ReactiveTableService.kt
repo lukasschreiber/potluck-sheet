@@ -32,7 +32,7 @@ class ReactiveTableService(
     }
 
     fun updateTableEntry(update: PotluckTableEntry) {
-        tableEntryRepository.saveIfNotPresent(update.name, update.userId!!, update.tableId!!).mapNotNull {
+        tableEntryRepository.saveIfNotPresent(update.value, update.userId!!, update.tableId!!).mapNotNull {
             tableFluxSink?.next(TableEntrySyncDto(TableEntrySyncTypes.UPDATED, it))
         }.subscribe()
     }
@@ -44,7 +44,9 @@ class ReactiveTableService(
                     userRepository.findById(entry.userId!!) // Assuming there's a userRepository for user information
                         .map { user ->
                             TableEntryWithUserDto(
-                                entry = entry,
+                                uuid = entry.uuid!!,
+                                tableId = table.uuid,
+                                value = entry.value,
                                 user = user.toDto()
                             )
                         }

@@ -31,6 +31,7 @@ class WebSecurityConfig(@Autowired val userRepository: UserRepository) {
                 exchanges
                     .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .pathMatchers("/api/auth/**").permitAll()
+                    .pathMatchers("/api/config").permitAll()
                     .anyExchange().authenticated()
             }
             .csrf { csrf ->

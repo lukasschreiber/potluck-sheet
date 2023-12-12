@@ -63,11 +63,5 @@ class AuthController(
                     }
                 }
             }
-            .onErrorResume(WebExchangeBindException::class.java) { ex ->
-                // Handle validation errors here
-                val validationErrors = ex.bindingResult.fieldErrors.map { FieldErrorDto(it.field, it.defaultMessage) }
-                val response = ErrorResponse("Validation failed", validationErrors)
-                Mono.just(ResponseEntity.badRequest().body(response))
-            }
     }
 }

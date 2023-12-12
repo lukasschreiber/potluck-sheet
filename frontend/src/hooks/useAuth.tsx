@@ -1,11 +1,11 @@
 import React, {createContext, PropsWithChildren, useContext, useMemo} from "react";
 import {useNavigate} from "react-router-dom";
 import {useLocalStorage} from "./useLocalStorage.ts";
-import {LoggedinUser} from "../api/types.ts";
+import {LoggedInUser} from "../api/types.ts";
 
 interface AuthContextProps {
-    user: LoggedinUser | null;
-    login: (data: LoggedinUser) => void;
+    user: LoggedInUser | null;
+    login: (data: LoggedInUser) => void;
     logout: () => void;
 }
 
@@ -15,7 +15,7 @@ export const AuthProvider : React.FC<PropsWithChildren> = ({ children }) => {
     const [user, setUser] = useLocalStorage("user");
     const navigate = useNavigate();
 
-    const login = async (data: LoggedinUser) => {
+    const login = async (data: LoggedInUser) => {
         setUser(data);
         navigate("/");
     };

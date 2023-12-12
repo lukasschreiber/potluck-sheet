@@ -1,4 +1,4 @@
-import {LoggedinUser, ResponseTable, Result, Table, UnregisteredUser, User} from "./types.ts";
+import {ApiConfig, LoggedInUser, Result, Table, UnregisteredUser, User} from "./types.ts";
 
 function emptyResult(ok: boolean, status: number): Result<null> {
     return {
@@ -17,7 +17,7 @@ const headers = {
 function getAuthenticatedHeaders() {
     const user = localStorage.getItem("user")
     if(user == null) return headers
-    const loggedInUser: LoggedinUser = JSON.parse(user)
+    const loggedInUser: LoggedInUser = JSON.parse(user)
     return {
         ...headers,
         "Authorization": "Basic " + loggedInUser.basicAuth
@@ -47,24 +47,29 @@ export async function login(user: UnregisteredUser): Promise<Result<User>> {
     }
 }
 
+export async function getConfig(): Promise<Result<ApiConfig>> {
+    const response = await fetch(API_PATH + "/config", {
+        method: "GET",
+        headers
+    })
+    const json = await response.json()
+    return {
+        status: response.status,
+        ok: response.ok,
+        body: json
+    }
+}
+
 export async function getTables(): Promise<Result<Table[]>> {
     const response = await fetch(API_PATH + "/tables", {
         method: "GET",
         headers: getAuthenticatedHeaders()
     })
-    const json: ResponseTable[] = await response.json()
+    const json: Table[] = await response.json()
     return {
         status: response.status,
         ok: response.ok,
-        body: json.map(table => ({
-            ...table,
-            entries: table.entries.map(entry => ({
-                uuid: entry.entry.uuid,
-                tableId: entry.entry.tableId,
-                value: entry.entry.name,
-                user: entry.user
-            }))
-        } as unknown as Table))
+        body: json
     }
 }
 

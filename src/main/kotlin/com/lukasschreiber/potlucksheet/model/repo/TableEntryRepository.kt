@@ -14,9 +14,9 @@ import java.util.*
 interface TableEntryRepository : R2dbcRepository<PotluckTableEntry, UUID> {
 
     @Transactional
-    @Query(value = "INSERT INTO entries (uuid, name, user_id, table_id) VALUES (gen_random_uuid(), :name, :user_id, :table_id) ON CONFLICT (user_id,table_id) DO UPDATE SET name = EXCLUDED.name RETURNING *")
+    @Query(value = "INSERT INTO entries (uuid, value, user_id, table_id) VALUES (gen_random_uuid(), :value, :user_id, :table_id) ON CONFLICT (user_id,table_id) DO UPDATE SET value = EXCLUDED.value RETURNING *")
     fun saveIfNotPresent(
-        @Param("name") name: String,
+        @Param("value") value: String,
         @Param("user_id") userId: UUID,
         @Param("table_id") tableId: UUID
     ): Mono<PotluckTableEntry>

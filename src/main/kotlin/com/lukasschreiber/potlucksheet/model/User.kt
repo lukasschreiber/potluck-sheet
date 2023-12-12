@@ -16,7 +16,7 @@ data class User(
     @Column("name")
     var name: String = "",
     @field:NotEmpty
-    @field:Size(min = 4)
+    @field:Size(min = 4, message = "Password must be at least {min} characters long")
     @Column var password: String = "",
 ) {
     fun toDto(): UserDto {
