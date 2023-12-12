@@ -1,7 +1,16 @@
+spring:
+  data:
+    r2dbc:
+      repositories:
+        enabled: true
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/potluckdb
+    username: \${POSTGRES_USER}
+    password: \${POSTGRES_PASSWORD}
 app:
   potluck-sheet:
-    #    version: ${project.version}
-    #    build-year: ${buildYear}
+    version: ${project.version}
+    build-year: ${buildYear}
     dietary-restrictions:
       - name: Vegan
         color: "#d9f7be"  # Light green
