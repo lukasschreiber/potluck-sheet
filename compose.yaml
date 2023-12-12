@@ -16,6 +16,8 @@ services:
     build: .
     networks:
       - web
+    depends_on:
+      - postgres
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_USER: ${POSTGRES_USER}
