@@ -6,6 +6,7 @@ import {Button} from "../components/common/Button.tsx";
 import {useAuth} from "../hooks/useAuth.tsx";
 import {ApiError, User} from "../api/types.ts";
 import {Link} from "react-router-dom";
+import {AbiLogo} from "../assets";
 
 export function RegisterPage() {
     const auth  = useAuth()
@@ -21,7 +22,7 @@ export function RegisterPage() {
         event.preventDefault();
         const password = (event.currentTarget.querySelector("#password") as HTMLInputElement).value
         if(password !== (event.currentTarget.querySelector("#confirmPassword") as HTMLInputElement).value) {
-            setConfirmPasswordErrors(prev => [...prev, "The passwords do not match."])
+            setConfirmPasswordErrors(prev => [...prev, "Die Passwörter müssen übereinstimmen."])
             return;
         }
 
@@ -36,7 +37,7 @@ export function RegisterPage() {
                 name: user.name,
                 uuid: user.uuid,
                 basicAuth: btoa(user.name + ":" + password)
-            })
+            }, "/restrictions")
         } else {
             const error: ApiError = result.body as ApiError
             for(let fieldError of error.errors) {
@@ -47,18 +48,19 @@ export function RegisterPage() {
     }
 
     return (
-        <div className={"flex items-center justify-center flex-1"}>
+        <div className={"flex items-center justify-center flex-1 flex-col"}>
+            <AbiLogo className={"w-[350px] h-fit"}/>
             <Card className={"h-fit w-[400px]"}>
-                <div className={"text-2xl text-slate-700 text-center mb-2"}>Register</div>
+                <div className={"text-2xl text-slate-700 text-center mb-2"}>Registrieren</div>
                 <form className={"flex flex-col"} onSubmit={handleRegister}>
                     <Input type="text" placeholder="Name" id="name" />
                     {nameErrors.length > 0 && <div className={"text-red-500 text-sm"}>{nameErrors.map(error => <div>{error}</div>)}</div>}
-                    <Input type="password" placeholder="Password" id={"password"} />
+                    <Input type="password" placeholder="Passwort" id={"password"} />
                     {passwordErrors.length > 0 && <div className={"text-red-500 text-sm"}>{passwordErrors.map(error => <div>{error}</div>)}</div>}
-                    <Input type="password" placeholder="Confirm Password" id={"confirmPassword"} />
+                    <Input type="password" placeholder="Passwort Wiederholen" id={"confirmPassword"} />
                     {confirmPasswordErrors.length > 0 && <div className={"text-red-500 text-sm"}>{confirmPasswordErrors.map(error => <div>{error}</div>)}</div>}
-                    <Button type="submit">Register</Button>
-                    <div className={"text-sm text-slate-600"}>Are you already registered? <Link to={"/login"} className={"underline"}>Login here</Link></div>
+                    <Button type="submit">Registrieren</Button>
+                    <div className={"text-sm text-slate-600"}>Bist du bereits registriert? <Link to={"/login"} className={"underline"}>Hier anmelden</Link></div>
                 </form>
             </Card>
         </div>

@@ -39,7 +39,7 @@ class CorsConfig {
     companion object {
         const val ALLOWED_HEADERS =
             "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN"
-        const val ALLOWED_METHODS = "GET, PUT, POST, DELETE, OPTIONS"
+        const val ALLOWED_METHODS = "GET, PATCH, POST, DELETE, OPTIONS"
         const val ALLOWED_ORIGIN = "*"
         const val MAX_AGE = "3600"
     }

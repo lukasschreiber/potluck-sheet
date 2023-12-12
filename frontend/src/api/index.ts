@@ -1,4 +1,14 @@
-import {ApiConfig, ApiError, LoggedInUser, Result, Table, UnregisteredUser, User} from "./types.ts";
+import {
+    ApiConfig,
+    ApiError,
+    DietaryRestriction,
+    LoggedInUser,
+    PatchDietaryRestriction,
+    Result,
+    Table,
+    UnregisteredUser,
+    User
+} from "./types.ts";
 
 export const API_PATH = "http://192.168.178.73:8080/api"
 
@@ -85,5 +95,46 @@ export async function updateTable(value: string, tableId: string): Promise<Resul
         body: null
     }
 }
+
+export async function getDietaryRestrictions(): Promise<Result<DietaryRestriction[]>> {
+    const response = await fetch(API_PATH + "/dietary-restrictions", {
+        method: "GET",
+        headers: getAuthenticatedHeaders(headers)
+    })
+    const json: DietaryRestriction[] = await response.json()
+    return {
+        status: response.status,
+        ok: response.ok,
+        body: json
+    }
+}
+
+export async function getRelevantDietaryRestrictions(): Promise<Result<DietaryRestriction[]>> {
+    const response = await fetch(API_PATH + "/dietary-restrictions/relevant", {
+        method: "GET",
+        headers: getAuthenticatedHeaders(headers)
+    })
+    const json: DietaryRestriction[] = await response.json()
+    return {
+        status: response.status,
+        ok: response.ok,
+        body: json
+    }
+}
+
+export async function patchDietaryRestrictions(patches: PatchDietaryRestriction[]): Promise<Result<null>> {
+    const response = await fetch(API_PATH + "/dietary-restrictions", {
+        method: "PATCH",
+        body: JSON.stringify(patches),
+        headers: getAuthenticatedHeaders(headers)
+    })
+    return {
+        status: response.status,
+        ok: response.ok,
+        body: null
+    }
+}
+
+
 
 

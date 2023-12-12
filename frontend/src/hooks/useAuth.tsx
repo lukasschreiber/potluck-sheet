@@ -5,7 +5,7 @@ import {LoggedInUser} from "../api/types.ts";
 
 interface AuthContextProps {
     user: LoggedInUser | null;
-    login: (data: LoggedInUser) => void;
+    login: (data: LoggedInUser, redirect?: string) => void;
     logout: () => void;
 }
 
@@ -15,9 +15,9 @@ export const AuthProvider : React.FC<PropsWithChildren> = ({ children }) => {
     const [user, setUser] = useLocalStorage("user");
     const navigate = useNavigate();
 
-    const login = async (data: LoggedInUser) => {
+    const login = async (data: LoggedInUser, redirect: string = "/") => {
         setUser(data);
-        navigate("/");
+        navigate(redirect);
     };
 
     const logout = () => {

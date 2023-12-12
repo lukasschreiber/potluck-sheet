@@ -52,8 +52,6 @@ class UserController(@Autowired val userService: UserService) {
             }
 
         val allConnectedUsersFlux = Flux.fromIterable(userService.getActiveUsers())
-        println(userService.getActiveUsers())
-
         return Flux.merge(allConnectedUsersFlux, Flux.merge(newUserFlux, userService.heartbeatFlux))
     }
 }

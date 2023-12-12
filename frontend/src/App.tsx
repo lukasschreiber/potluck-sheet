@@ -7,6 +7,9 @@ import {ProtectedRoute} from "./components/common/ProtectedRoute.tsx";
 import {RegisterPage} from "./pages/RegisterPage.tsx";
 import {ConnectionStreamProvider} from "./hooks/useConnectionStream.tsx";
 import {TableStreamProvider} from "./hooks/useTableStream.tsx";
+import {RestrictionPage} from "./pages/RestrictionPage.tsx";
+import {ImprintPage} from "./pages/ImprintPage.tsx";
+import {PrivacyPage} from "./pages/PrivacyPage.tsx";
 
 function App() {
 
@@ -23,8 +26,16 @@ function App() {
                             </TableStreamProvider>
                         </ConnectionStreamProvider>
                     </ProtectedRoute>} />
+                <Route path={"restrictions"} element={
+                    <ProtectedRoute>
+                        <RestrictionPage />
+                    </ProtectedRoute>
+                } />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/imprint" element={<ImprintPage />} />
+
             </Routes>
         </div>
         <Footer />

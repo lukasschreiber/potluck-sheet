@@ -5,6 +5,7 @@ import {useAuth} from "../hooks/useAuth.tsx";
 import {Card} from "../components/common/Card.tsx";
 import {Input} from "../components/common/Input.tsx";
 import {Button} from "../components/common/Button.tsx";
+import {AbiLogo} from "../assets";
 
 export function LoginPage() {
     const [error, setError] = useState<String|undefined>(undefined)
@@ -26,20 +27,21 @@ export function LoginPage() {
                 basicAuth: btoa(name + ":" + password)
             })
         } else {
-            setError("Login failed, username or password are not correct.")
+            setError("Das Login ist Fehlgeschlagen, Nutzername oder Passwort sind falsch.")
         }
     }
 
     return (
-        <div className={"flex items-center justify-center flex-1"}>
+        <div className={"flex items-center justify-center flex-1 flex-col"}>
+            <AbiLogo className={"w-[350px] h-fit"}/>
             <Card className={"h-fit w-[400px]"}>
-                <div className={"text-2xl text-slate-700 text-center mb-2"}>Login</div>
+                <div className={"text-2xl text-slate-700 text-center mb-2"}>Anmelden</div>
                 <form className={"flex flex-col"} onSubmit={handleLogin}>
                     <Input type="text" placeholder="Name" id="name" />
-                    <Input type="password" placeholder="Password" id={"password"} />
+                    <Input type="password" placeholder="Passwort" id={"password"} />
                     {error && <div className={"text-red-500 text-sm"}>{error}</div>}
-                    <Button type="submit">Login</Button>
-                    <div className={"text-sm text-slate-600"}>Don't you have an account? <Link to={"/register"} className={"underline"}>Register here</Link></div>
+                    <Button type="submit">Anmelden</Button>
+                    <div className={"text-sm text-slate-600"}>Du hast noch keinen Account? <Link to={"/register"} className={"underline"}>Hier Registrieren</Link></div>
                 </form>
             </Card>
         </div>

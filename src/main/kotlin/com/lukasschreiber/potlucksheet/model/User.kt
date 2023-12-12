@@ -12,11 +12,11 @@ import java.util.*
 data class User(
     @Id
     var uuid: UUID? = null,
-    @field:NotEmpty(message = "Name should not be empty.")
+    @field:NotEmpty(message = "Der Name darf nicht leer sein.")
     @Column("name")
     var name: String = "",
-    @field:NotEmpty
-    @field:Size(min = 4, message = "Password must be at least {min} characters long")
+    @field:NotEmpty(message = "Das Passwort darf nicht leer sein.")
+    @field:Size(min = 4, message = "Das Passwort muss mindestens {min} Zeichen lang sein.")
     @Column var password: String = "",
 ) {
     fun toDto(): UserDto {

@@ -1,32 +1,32 @@
 app:
   potluck-sheet:
-#    version: ${project.version}
-#    build-year: ${buildYear}
+    #    version: ${project.version}
+    #    build-year: ${buildYear}
     dietary-restrictions:
       - name: Vegan
         color: "#d9f7be"  # Light green
-      - name: Vegetarian
+      - name: Vegetarisch
         color: "#fff2cc"  # Light yellow
-      - name: Dairy-Free
+      - name: Laktosefrei
         color: "#cce5ff"  # Light blue
-      - name: Gluten-Free
+      - name: Glutenfrei
         color: "#e6ccb3"  # Light brown
-      - name: Kosher
+      - name: Koscher
         color: "#b3d9ff"  # Light blue
       - name: Halal
         color: "#ffd699"  # Light orange
       - name: Diabetes
         color: "#ffb3b3"  # Light red
-      - name: Wheat Allergy
+      - name: Weizen-Allergy
         color: "#fff275"  # Light yellow
-      - name: Nut Allergy
+      - name: Nussallergie
         color: "#e066ff"  # Light purple
-      - name: Egg Allergy
+      - name: Ei-Allergie
         color: "#ffc2e0"  # Light pink
-      - name: Soy Allergy
+      - name: Soja-Allergie
         color: "#d9d9d9"  # Light gray
     tables:
-      - name: Food
-        description: Everything around food
-      - name: Drinks
-        description: Everything you cannot eat
+      - name: Essen
+        description: Wir möchten ein kaltes Buffet machen, Waffeln oder Ähnliches sind aber auch okay. Ein volles Drei Gänge Menu möchten wir nicht servieren, da ja das Treffen und nicht das Essen im Vordergrund stehen soll.
+      - name: Getränke
+        description: Jegliche Getränke sind Willkommen, bitte aber keinen harten Alkohol, wenn ihr gerne mit einem Glas Schnaps nach dem Treffen auf das Wiedersehen anstoßen möchtet könnt ihr das gerne tun.

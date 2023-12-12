@@ -53,3 +53,16 @@ export interface TableStreamMessage {
     type: "UPDATED",
     tableEntry: TableEntry
 }
+
+export interface DietaryRestriction {
+    uuid: string,
+    label: string,
+    color: string,
+    count: number,
+    active: boolean
+}
+
+export interface PatchDietaryRestriction {
+    uuid: string,
+    action: "ADD" | "REMOVE"
+}
