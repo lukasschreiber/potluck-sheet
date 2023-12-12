@@ -1,23 +1,30 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
-    id 'org.jetbrains.kotlin.jvm' version '1.9.20'
-    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.20'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.21'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.9.21'
     id "com.github.node-gradle.node" version "7.0.1"
 }
 
 group = 'com.lukasschreiber'
 version = '0.0.1-SNAPSHOT'
 
+kotlin {
+    jvmToolchain(17)
+}
+
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 node {
     version = "19.7.0"
     download = true
+    nodeProjectDir = file("${project.projectDir}/frontend")
 }
 
 repositories {
@@ -43,26 +50,25 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
 }
 
+tasks.withType(KotlinCompile).configureEach {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
+        jvmTarget = JvmTarget.JVM_17
+    }
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+bootJar {
+    mainClass = "com.lukasschreiber.potlucksheet.PotluckSheetApplicationKt"
+}
+
 processResources {
     filesMatching("**/application.properties") {
         expand( project.properties + [buildYear: new Date().format('yyyy')] )
     }
-}
-
-tasks.withType(KotlinCompile).configureEach {
-    kotlinOptions {
-        freeCompilerArgs += '-Xjsr305=strict'
-        jvmTarget = '17'
-    }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}
-
-tasks.register('tailwindWatch', NpmTask) {
-    dependsOn npmInstall
-    args = ["run", "watch:postcss"]
 }
 
 tasks.register('npmBuild', NpmTask) {
@@ -76,5 +82,3 @@ tasks.register('copyFrontendResources', Copy) {
     from 'frontend/build'
     into 'build/resources/main/static'
 }
-
-bootJar.dependsOn "copyFrontendResources"
