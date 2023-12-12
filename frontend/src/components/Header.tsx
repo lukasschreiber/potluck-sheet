@@ -31,9 +31,11 @@ export function Header() {
             id={"modal-bg"}
             className={"fixed top-0 left-0 w-screen h-screen bg-slate-200/50 backdrop-blur-sm flex items-center justify-center"}>
             <Card className={"bg-white"}>
-                <div className={"text-2xl text-slate-700 text-center mb-2"}>Aktive Nutzer</div>
+                <div className={"text-2xl text-slate-700 text-center mb-2 w-[400px]"}>Aktive Nutzer</div>
+                <div className={"border"}>
                 {connectionStream?.users.sort((a, b) => a.name.localeCompare(b.name)).map(user =>
-                    <div>{user.name}{user.uuid === auth?.user?.uuid ? " (ich)" : ""}</div>)}
+                    <div key={user.uuid} className={"p-1 odd:bg-slate-50 [&:not(:last-child)]:border-b"}>{user.name}{user.uuid === auth?.user?.uuid ? " (ich)" : ""}</div>)}
+                </div>
             </Card>
         </div>, document.body)}
     </header>

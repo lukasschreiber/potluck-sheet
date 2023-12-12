@@ -27,7 +27,6 @@ export function HomePage() {
 
     useEffect(() => {
         if (tableStream?.tables && tableValues.size == 0) {
-            console.log("fetching")
             const initialTableValues = new Map(
                 tableStream.tables.map((table) => {
                     const record: [string, string] = [
