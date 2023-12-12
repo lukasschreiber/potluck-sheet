@@ -33,6 +33,7 @@ export async function register(user: UnregisteredUser): Promise<Result<null>> {
     return emptyResult(res.ok, res.status);
 }
 
+
 export async function login(user: UnregisteredUser): Promise<Result<User>> {
     const response = await fetch(API_PATH + "/auth/login", {
         method: "POST",
@@ -72,5 +73,3 @@ export async function getTables(): Promise<Result<Table[]>> {
         body: json
     }
 }
-
-
