@@ -4,8 +4,6 @@ services:
     image: postgres:latest
     restart: on-failure
     env_file: ./.env
-    networks:
-      - web
     volumes:
       - db:/var/lib/postgresql/data
     ports:
@@ -17,8 +15,6 @@ services:
   backend:
     build: .
     env_file: ./.env
-    networks:
-      - web
     depends_on:
       - postgres
     environment:
@@ -28,7 +24,5 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "8080:8080"
-networks:
-  web:
 volumes:
   db:
