@@ -2,7 +2,10 @@ import {useConfig} from "../hooks/useConfig.tsx";
 
 export function Footer() {
     const config = useConfig()
-    return (<div className="bg-amber-300">&copy; <span className="text-amber-700">{config?.config?.buildYear}</span>,
-        Lukas Schreiber - Version <span>{config?.config?.version}</span>
-    </div>)
+    return (
+        <footer className="bg-slate-50 px-5 py-2 text-slate-500 w-full">
+            &copy; <span>{config?.config?.buildYear}</span>,
+            Lukas Schreiber, David Heins - Version <span>{config?.config?.version}</span>
+        </footer>
+    )
 }

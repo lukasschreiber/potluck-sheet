@@ -38,3 +38,18 @@ export interface ApiConfig {
     version: String,
     buildYear: String
 }
+
+export interface ApiError {
+    message: string
+    errors: {field: string, message: string}[]
+}
+
+export interface ConnectionStreamMessage {
+    type: "CONNECTED" | "DISCONNECTED",
+    user: User
+}
+
+export interface TableStreamMessage {
+    type: "UPDATED",
+    tableEntry: TableEntry
+}

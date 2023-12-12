@@ -4,7 +4,7 @@ import com.lukasschreiber.potlucksheet.model.PotluckTableEntry
 
 data class TableEntrySyncDto(
     val type: TableEntrySyncTypes,
-    val tableEntry: PotluckTableEntry?
+    val tableEntry: TableEntryWithUserDto?
 )
 
 enum class TableEntrySyncTypes {

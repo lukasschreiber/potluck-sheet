@@ -20,19 +20,12 @@ class UserService(@Autowired val passwordEncoder: PasswordEncoder, val userRepos
     final val userFlux: Flux<UserConnectionDto> = Flux.create { sink ->
         userFluxSink = sink
     }.share()
+    final val heartbeatFlux =  Flux.interval(Duration.ofSeconds(15))
+        .map { UserConnectionDto(ConnectionTypes.HEARTBEAT, null) }
 
-
-    init {
-        // Periodically send a heartbeat event to keep the connection alive
-        val heartbeatFlux = Flux.interval(Duration.ofSeconds(5))
-            .map { UserConnectionDto(ConnectionTypes.HEARTBEAT, null) }
-
-        userFlux.mergeWith(heartbeatFlux)
-            .onBackpressureDrop()
-            .subscribe()
-    }
 
     fun getActiveUsers(): Set<UserConnectionDto> {
+        if(activeUsers.size <= 0) return emptySet()
         return activeUsers.map { user -> UserConnectionDto(ConnectionTypes.CONNECTED, user) }.toSet()
     }
 

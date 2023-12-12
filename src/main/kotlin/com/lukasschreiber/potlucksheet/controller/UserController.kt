@@ -45,9 +45,15 @@ class UserController(@Autowired val userService: UserService) {
                     userService.removeUser(it.toDto())
                 }
             }
+            .doOnError {
+                userService.userRepository.findByName(principal.name).subscribe {
+                    userService.removeUser(it.toDto())
+                }
+            }
 
         val allConnectedUsersFlux = Flux.fromIterable(userService.getActiveUsers())
+        println(userService.getActiveUsers())
 
-        return Flux.merge(allConnectedUsersFlux, newUserFlux)
+        return Flux.merge(allConnectedUsersFlux, Flux.merge(newUserFlux, userService.heartbeatFlux))
     }
 }

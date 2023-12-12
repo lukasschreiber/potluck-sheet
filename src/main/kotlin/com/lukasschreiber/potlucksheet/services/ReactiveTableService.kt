@@ -21,19 +21,16 @@ class ReactiveTableService(
         tableFluxSink = sink
     }.share()
 
-    init {
-        // Periodically send a heartbeat event to keep the connection alive
-        val heartbeatFlux = Flux.interval(Duration.ofSeconds(5))
-            .map { TableEntrySyncDto(TableEntrySyncTypes.HEARTBEAT, null) }
-
-        tableFlux.mergeWith(heartbeatFlux)
-            .onBackpressureDrop()
-            .subscribe()
-    }
-
     fun updateTableEntry(update: PotluckTableEntry) {
-        tableEntryRepository.saveIfNotPresent(update.value, update.userId!!, update.tableId!!).mapNotNull {
-            tableFluxSink?.next(TableEntrySyncDto(TableEntrySyncTypes.UPDATED, it))
+        tableEntryRepository.saveIfNotPresent(update.value, update.userId!!, update.tableId!!).flatMap {entry ->
+            userRepository.findById(entry.userId!!).mapNotNull {
+                tableFluxSink?.next(TableEntrySyncDto(TableEntrySyncTypes.UPDATED, TableEntryWithUserDto(
+                    user = it.toDto(),
+                    uuid = entry.uuid!!,
+                    tableId = entry.tableId!!,
+                    value = entry.value
+                )))
+            }
         }.subscribe()
     }
 
