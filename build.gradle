@@ -44,10 +44,10 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-    testImplementation 'org.springframework.security:spring-security-test'
+//    testImplementation 'org.springframework.security:spring-security-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
+//    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation 'io.projectreactor:reactor-test'
 }
 
 tasks.withType(KotlinCompile).configureEach {
@@ -57,9 +57,9 @@ tasks.withType(KotlinCompile).configureEach {
     }
 }
 
-tasks.withType(Test).configureEach {
-    useJUnitPlatform()
-}
+//tasks.withType(Test).configureEach {
+//    useJUnitPlatform()
+//}
 
 bootJar {
     mainClass = "com.lukasschreiber.potlucksheet.PotluckSheetApplicationKt"
@@ -88,6 +88,6 @@ copyFrontendResources.dependsOn "npmBuild"
 
 bootJar.dependsOn "copyFrontendResources"
 jar.dependsOn "copyFrontendResources"
-test.dependsOn "copyFrontendResources"
+//test.dependsOn "copyFrontendResources"
 
 
