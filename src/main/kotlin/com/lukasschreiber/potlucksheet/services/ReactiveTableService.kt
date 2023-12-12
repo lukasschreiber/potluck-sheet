@@ -35,7 +35,7 @@ class ReactiveTableService(
     }
 
     fun getTablesWithEntries(): Flux<TableWithEntriesDto> {
-        return tableRepository.findAll().flatMap { table ->
+        return tableRepository.findAll().filter { it.active }.flatMap { table ->
             tableEntryRepository.findByTableId(table.uuid!!)
                 .flatMap { entry ->
                     userRepository.findById(entry.userId!!) // Assuming there's a userRepository for user information
