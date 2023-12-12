@@ -8,7 +8,7 @@ WORKDIR /home/gradle/project
 
 RUN gradle build --no-daemon
 
-FROM openjdk:17-alpine
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
