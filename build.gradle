@@ -76,9 +76,18 @@ tasks.register('npmBuild', NpmTask) {
     description = 'Run npm build'
 }
 
-assemble.dependsOn "npmBuild"
-
 tasks.register('copyFrontendResources', Copy) {
-    from 'frontend/build'
-    into 'build/resources/main/static'
+    from "${projectDir}/frontend/dist"
+    into "${projectDir}/build/resources/main/static"
 }
+
+
+npmBuild.dependsOn "npmInstall"
+
+copyFrontendResources.dependsOn "npmBuild"
+
+bootJar.dependsOn "copyFrontendResources"
+jar.dependsOn "copyFrontendResources"
+test.dependsOn "copyFrontendResources"
+
+

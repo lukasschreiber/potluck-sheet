@@ -4,7 +4,9 @@ import com.lukasschreiber.potlucksheet.model.dto.ErrorResponse
 import com.lukasschreiber.potlucksheet.model.dto.FieldErrorDto
 import com.lukasschreiber.potlucksheet.services.UserService
 import jakarta.validation.ConstraintViolationException
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.bind.support.WebExchangeBindException
@@ -27,4 +29,10 @@ class GlobalErrorController {
         return ResponseEntity.badRequest().body(response)
     }
 
+
+    @ExceptionHandler(BadCredentialsException::class)
+    fun handleUserExistsException(ex: BadCredentialsException): ResponseEntity<*> {
+        val response = ErrorResponse("Bad Credentials", listOf())
+        return ResponseEntity(response, HttpStatus.UNAUTHORIZED)
+    }
 }

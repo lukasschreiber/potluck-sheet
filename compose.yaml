@@ -2,6 +2,8 @@ services:
   postgres:
     image: postgres:latest
     restart: on-failure
+    volumes:
+      - db:/var/lib/postgresql/data
     ports:
       - target: 5432
         published: 5432
@@ -9,3 +11,9 @@ services:
       POSTGRES_USER: potluck
       POSTGRES_PASSWORD: UJ250L9on9iuwpa
       POSTGRES_DB: potluckdb
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+volumes:
+  db:

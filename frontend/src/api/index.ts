@@ -10,7 +10,7 @@ import {
     User
 } from "./types.ts";
 
-export const API_PATH = "http://192.168.178.73:8080/api"
+export const API_PATH = import.meta.env.VITE_API_URL
 
 const headers: HeadersInit = {
     "Content-Type": "application/json"

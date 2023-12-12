@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.Customizer
@@ -30,7 +31,8 @@ class WebSecurityConfig(@Autowired val userRepository: UserRepository) {
                     .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .pathMatchers("/api/auth/**").permitAll()
                     .pathMatchers("/api/config").permitAll()
-                    .anyExchange().authenticated()
+                    .pathMatchers("/api/**").authenticated()
+                    .anyExchange().permitAll()
             }
             .csrf { csrf ->
                 csrf.disable()
@@ -64,7 +66,7 @@ class WebSecurityConfig(@Autowired val userRepository: UserRepository) {
                     if (passwordEncoder().matches(password, user.password)) {
                         sink.next(UsernamePasswordAuthenticationToken(user, null, user.authorities))
                     } else {
-                        sink.error(IllegalArgumentException("Bad credentials"))
+                        sink.error(BadCredentialsException("Bad Credentials"))
                     }
                 }
         }
