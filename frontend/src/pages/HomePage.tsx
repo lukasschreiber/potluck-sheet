@@ -26,6 +26,7 @@ export function HomePage() {
 
 
     useEffect(() => {
+        console.log("fetching")
         if (tableStream?.tables) {
             const initialTableValues = new Map(
                 tableStream.tables.map((table) => {
@@ -38,7 +39,7 @@ export function HomePage() {
             );
             setTableValues(initialTableValues);
         }
-    }, [tableStream, auth]);
+    }, []);
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>, tableId: string) {
         const newValue = event.currentTarget.value;
@@ -68,7 +69,7 @@ export function HomePage() {
             </div>
             <div className={"flex flex-col-reverse w-full gap-5 md:flex-row"}>
                 <div className={"flex-1 flex flex-col gap-5 mb-2"}>
-                    {tableStream?.tables.sort((a, b) => a.name.localeCompare(b.name)).map(table => (
+                    {tableStream?.tables !== undefined && tableStream.tables.sort((a, b) => a.name.localeCompare(b.name)).map(table => (
                         <Card key={table.uuid}>
                             <div className={"flex flex-row justify-between"}>
                                 <h2 className={"text-slate-600 text-2xl"}>{table.name}</h2>
@@ -88,10 +89,10 @@ export function HomePage() {
                                 <tr key={auth?.user?.uuid} className={"bg-teal-500/50"}>
                                     <td className={"border px-2 border-x-teal-600/30"}>{auth?.user?.name}</td>
                                     <td className={"border px-2 border-x-teal-600/30"}>
-                                        <input
+                                        {tableValues.get(table.uuid) !== undefined && <input
                                             className={"w-full outline-0 bg-transparent"} type={"text"}
                                             value={tableValues.get(table.uuid)}
-                                            onChange={(event) => handleInputChange(event, table.uuid)}/>
+                                            onChange={(event) => handleInputChange(event, table.uuid)}/>}
                                     </td>
                                 </tr>
                                 {table.entries.filter(entry => entry.user.uuid !== auth?.user?.uuid).sort((a, b) => a.user.name.localeCompare(b.user.name)).map(entry => (

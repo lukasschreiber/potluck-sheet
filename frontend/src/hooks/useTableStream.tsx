@@ -2,7 +2,6 @@ import {Table, TableStreamMessage} from "../api/types.ts";
 import React, {createContext, PropsWithChildren, useContext, useEffect, useMemo, useState} from "react";
 import {API_PATH, getAuthenticatedHeaders, getTables} from "../api";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
-import {useAuth} from "./useAuth.tsx";
 
 interface TableStreamContextProps {
     tables: Table[],
@@ -14,7 +13,6 @@ const TableStreamContext = createContext<TableStreamContextProps | undefined>(un
 export const TableStreamProvider: React.FC<PropsWithChildren> = ({children}) => {
     const [tables, setTables] = useState<Table[]>([])
     const [abortController, setAbortController] = useState<AbortController | undefined>(undefined)
-    const auth = useAuth()
 
     useEffect(() => {
         let controller = new AbortController();
@@ -30,7 +28,7 @@ export const TableStreamProvider: React.FC<PropsWithChildren> = ({children}) => 
                 signal: controller.signal,
                 onmessage(event) {
                     const message: TableStreamMessage = JSON.parse(event.data)
-                    if (message.type === "UPDATED" && auth?.user?.uuid !== message.tableEntry.user.uuid) {
+                    if (message.type === "UPDATED") {
                         setTables(tables => {
                             const targetTableIndex = tables.findIndex(table => table.uuid === message.tableEntry.tableId);
                             if (targetTableIndex !== -1) {
