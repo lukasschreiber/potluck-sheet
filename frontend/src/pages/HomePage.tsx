@@ -26,8 +26,8 @@ export function HomePage() {
 
 
     useEffect(() => {
-        console.log("fetching")
-        if (tableStream?.tables) {
+        if (tableStream?.tables && tableValues.size == 0) {
+            console.log("fetching")
             const initialTableValues = new Map(
                 tableStream.tables.map((table) => {
                     const record: [string, string] = [
@@ -39,7 +39,7 @@ export function HomePage() {
             );
             setTableValues(initialTableValues);
         }
-    }, []);
+    }, [tableStream]);
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>, tableId: string) {
         const newValue = event.currentTarget.value;
