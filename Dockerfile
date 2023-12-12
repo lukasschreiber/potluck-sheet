@@ -3,6 +3,7 @@ LABEL authors="lukasschreiber"
 
 COPY build.gradle settings.gradle /home/gradle/project/
 COPY src /home/gradle/project/src
+COPY frontend /home/gradle/project/frontend
 
 WORKDIR /home/gradle/project
 
