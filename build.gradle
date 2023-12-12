@@ -66,7 +66,7 @@ bootJar {
 }
 
 processResources {
-    filesMatching("**/application.properties") {
+    filesMatching("**/application.yml") {
         expand( project.properties + [buildYear: new Date().format('yyyy')] )
     }
 }
