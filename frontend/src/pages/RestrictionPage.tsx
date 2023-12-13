@@ -50,11 +50,9 @@ export function RestrictionPage() {
 
     return <div className={"flex items-center justify-center flex-1"}>
         <Card className={"h-fit w-[400px] flex flex-col items-center"}>
-            <div className={"text-2xl text-slate-700 text-center mb-2"}>Restrictions</div>
-            <div className={"text-sm text-slate-400 mb-4"}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut
-                labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et
-                ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+            <div className={"text-2xl text-slate-700 text-center mb-2"}>Essenseinschränkungen</div>
+            <div className={"text-sm text-slate-400 mb-4"}>
+                Hier kannst du deine Essenseinschränkungen auswählen. Die Daten werden nicht mit einem Nutzeraccount assoziiert. Du kannst deine Auswahl aber in dem Browser in dem du sie getätigt hast bearbeiten.
             </div>
             <form className={"w-full flex flex-col items-center gap-4"} onSubmit={handleSubmit}>
                 <div className={"gap-2 flex flex-col"}>
