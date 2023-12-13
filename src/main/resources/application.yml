@@ -26,7 +26,7 @@ app:
         color: "#ffd699"  # Light orange
       - name: Diabetes
         color: "#ffb3b3"  # Light red
-      - name: Weizen-Allergy
+      - name: Weizen-Allergie
         color: "#fff275"  # Light yellow
       - name: Nussallergie
         color: "#e066ff"  # Light purple

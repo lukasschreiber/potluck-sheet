@@ -58,7 +58,7 @@ export function HomePage() {
                 Jahrgangstreffen des Abijahrgangs 2020 mitbringen möchtest.
                 Die Idee ist, dass jeder ein wenig Essen und/oder Trinken mitbringt, das wird dann in Form eines Buffets
                 geteilt. Es wird nichts zentral bereitgestellt werden.
-                In beiden Tabellen gibt es eine <span className={"rounded-sm px-1 bg-teal-500/50"}>blaue Zeile</span> in
+                In beiden Tabellen gibt es eine <span className={"rounded-sm px-1 bg-teal-500/50"}>türkise Zeile</span> in
                 der du eintragen kannst was du mitbringst.
                 Du brauchst nichts zu speichern, das passiert alles automatisch. Zur Orientierung fragen wir auch
                 anonymisiert Unverträglichkeiten/Essgewohnheiten ab, damit das
