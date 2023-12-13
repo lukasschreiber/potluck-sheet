@@ -20,7 +20,7 @@ export function LoginPage() {
             name: name,
             password: password
         })
-        if(result.ok && result.status == 200) {
+        if(result.ok && result.status == 200 && result.body) {
             auth?.login({
                 name: result.body.name,
                 uuid: result.body.uuid,
@@ -32,7 +32,7 @@ export function LoginPage() {
     }
 
     return (
-        <div className={"flex items-center justify-center flex-1 flex-col"}>
+        <div className={"flex items-center justify-center flex-1 flex-col  mb-10"}>
             <AbiLogo className={"w-[350px] h-fit"}/>
             <Card className={"h-fit w-[400px]"}>
                 <div className={"text-2xl text-slate-700 text-center mb-2"}>Anmelden</div>

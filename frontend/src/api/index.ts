@@ -40,13 +40,13 @@ export async function register(user: UnregisteredUser): Promise<Result<User | Ap
     }
 }
 
-export async function login(user: UnregisteredUser): Promise<Result<User>> {
+export async function login(user: UnregisteredUser): Promise<Result<User | undefined>> {
     const response = await fetch(API_PATH + "/auth/login", {
         method: "POST",
         body: JSON.stringify(user),
         headers
     })
-    const json = await response.json()
+    const json = response.status < 400 ? await response.json() : undefined
     return {
         status: response.status,
         ok: response.ok,

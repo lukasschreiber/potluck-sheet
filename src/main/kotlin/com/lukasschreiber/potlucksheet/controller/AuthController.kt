@@ -12,9 +12,11 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.ReactiveAuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.support.WebExchangeBindException
 import org.springframework.web.server.ServerWebExchange
@@ -31,16 +33,21 @@ class AuthController(
     @PostMapping("/login")
     fun login(@RequestBody @Valid user: User): Mono<ResponseEntity<UserDto?>> {
         val authenticationToken = UsernamePasswordAuthenticationToken(user.name, user.password)
-        return userService.userRepository.findByName(user.name).flatMap { foundUser ->
-            authenticationManager.authenticate(authenticationToken)
-                .doOnNext { authentication -> SecurityContextHolder.getContext().authentication = authentication }
-                .flatMap { Mono.just(ResponseEntity.ok(foundUser.toDto())) }
-                .onErrorResume {
-                    Mono.just(
-                        ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null)
-                    )
-                }
-        }
+
+        return userService.userRepository.findByName(user.name)
+            .switchIfEmpty(Mono.defer {
+                Mono.error<User>(UsernameNotFoundException("User not found"))
+            })
+            .flatMap { foundUser ->
+                authenticationManager.authenticate(authenticationToken)
+                    .then(Mono.just(ResponseEntity.ok(foundUser.toDto())))
+                    .onErrorResume {
+                        Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null))
+                    }
+            }
+            .onErrorResume {
+                Mono.just(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null))
+            }
     }
 
     @PostMapping("/register")
