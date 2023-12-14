@@ -8,7 +8,7 @@ import {Button} from "../components/common/Button.tsx";
 import {AbiLogo} from "../assets";
 
 export function LoginPage() {
-    const [error, setError] = useState<String|undefined>(undefined)
+    const [error, setError] = useState<string|undefined>(undefined)
     const auth  = useAuth()
 
     async function handleLogin(event: React.FormEvent<HTMLFormElement>) {

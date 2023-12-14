@@ -35,8 +35,8 @@ export interface TableEntry {
 }
 
 export interface ApiConfig {
-    version: String,
-    buildYear: String
+    version: string,
+    buildYear: string
 }
 
 export interface ApiError {

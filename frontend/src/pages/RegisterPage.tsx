@@ -40,7 +40,7 @@ export function RegisterPage() {
             }, "/restrictions")
         } else {
             const error: ApiError = result.body as ApiError
-            for(let fieldError of error.errors) {
+            for(const fieldError of error.errors) {
                 if(fieldError.field === "name") setNameErrors(prev => [...prev, fieldError.message])
                 if(fieldError.field === "password") setPasswordErrors(prev => [...prev, fieldError.message])
             }

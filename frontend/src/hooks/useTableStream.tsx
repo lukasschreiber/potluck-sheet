@@ -15,7 +15,7 @@ export const TableStreamProvider: React.FC<PropsWithChildren> = ({children}) => 
     const [abortController, setAbortController] = useState<AbortController | undefined>(undefined)
 
     useEffect(() => {
-        let controller = new AbortController();
+        const controller = new AbortController();
         setAbortController(controller);
 
         (async () => {

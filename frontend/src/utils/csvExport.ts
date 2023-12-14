@@ -13,7 +13,7 @@ export function downloadCSVExport(table: Table) {
     downloadFile(`${table.name}.csv`, content, "data:text/csv")
 }
 
-function escapeValue(string: String) {
+function escapeValue(string: string) {
     const escapeSequences = ["\n", DELIMITER, "\""]
     if(escapeSequences.some(s => string.includes(s))) {
         string = `"${string.replace("\"", "\"\"")}"`
@@ -30,4 +30,4 @@ function downloadFile(name: string, text: string, type: string) {
     document.body.appendChild(elem);
     elem.click();
     document.body.removeChild(elem);
-};
+}

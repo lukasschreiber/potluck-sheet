@@ -18,7 +18,7 @@ export const ConnectionStreamProvider: React.FC<PropsWithChildren> = ({children}
 
 
     useEffect(() => {
-        let controller = new AbortController();
+        const controller = new AbortController();
         setAbortController(controller);
 
         (async () => await fetchEventSource(API_PATH + "/users", {
