@@ -6,25 +6,28 @@ import {Card} from "../components/common/Card.tsx";
 import {Input} from "../components/common/Input.tsx";
 import {Button} from "../components/common/Button.tsx";
 import {AbiLogo} from "../assets";
+import {User} from "../api/types.ts";
 
 export function LoginPage() {
-    const [error, setError] = useState<String|undefined>(undefined)
+    const [error, setError] = useState<string|undefined>(undefined)
     const auth  = useAuth()
 
     async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        const name = (event.currentTarget.querySelector("#name") as HTMLInputElement).value
-        const password = (event.currentTarget.querySelector("#password") as HTMLInputElement).value
+        const nameInput = event.currentTarget.querySelector("#name") as HTMLInputElement
+        const passwordInput = event.currentTarget.querySelector("#password") as HTMLInputElement
 
         const result = await login({
-            name: name,
-            password: password
+            name: nameInput.value,
+            password: passwordInput.value
         })
+
         if(result.ok && result.status == 200 && result.body) {
+            const user: User = result.body as User
             auth?.login({
-                name: result.body.name,
-                uuid: result.body.uuid,
-                basicAuth: btoa(name + ":" + password)
+                name: user.name,
+                uuid: user.uuid,
+                basicAuth: btoa(user.name + ":" + passwordInput.value)
             })
         } else {
             setError("Das Login ist Fehlgeschlagen, Nutzername oder Passwort sind falsch.")

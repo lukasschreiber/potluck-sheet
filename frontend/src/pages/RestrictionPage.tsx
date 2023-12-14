@@ -28,13 +28,13 @@ export function RestrictionPage() {
         })
         const patches: PatchDietaryRestriction[] = []
         const parsedStoredRestrictions = storedRestrictions ? storedRestrictions as string[] : []
-        for (let selectedId of selectedIds) {
+        for (const selectedId of selectedIds) {
             if (!parsedStoredRestrictions.includes(selectedId)) {
                 patches.push({uuid: selectedId, action: "ADD"})
             }
         }
 
-        for (let unselectedId of unselectedIds) {
+        for (const unselectedId of unselectedIds) {
             if (parsedStoredRestrictions.includes(unselectedId)) {
                 patches.push({uuid: unselectedId, action: "REMOVE"})
             }
