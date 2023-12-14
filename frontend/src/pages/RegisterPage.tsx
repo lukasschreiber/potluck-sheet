@@ -20,23 +20,26 @@ export function RegisterPage() {
         setPasswordErrors([])
 
         event.preventDefault();
-        const password = (event.currentTarget.querySelector("#password") as HTMLInputElement).value
-        if(password !== (event.currentTarget.querySelector("#confirmPassword") as HTMLInputElement).value) {
+        const nameInput = event.currentTarget.querySelector("#name") as HTMLInputElement
+        const passwordInput = event.currentTarget.querySelector("#password") as HTMLInputElement
+        const confirmPasswordInput = (event.currentTarget.querySelector("#confirmPassword") as HTMLInputElement)
+
+        if(passwordInput.value !== confirmPasswordInput.value) {
             setConfirmPasswordErrors(prev => [...prev, "Die Passwörter müssen übereinstimmen."])
             return;
         }
 
         const result = await register({
-            name: (event.currentTarget.querySelector("#name") as HTMLInputElement).value,
-            password: (event.currentTarget.querySelector("#password") as HTMLInputElement).value
+            name: nameInput.value,
+            password: passwordInput.value
         })
 
-        if(result.status == 200) {
+        if(result.ok && result.status == 200 && result.body) {
             const user: User = result.body as User
             auth?.login({
                 name: user.name,
                 uuid: user.uuid,
-                basicAuth: btoa(user.name + ":" + password)
+                basicAuth: btoa(user.name + ":" + passwordInput.value)
             }, "/restrictions")
         } else {
             const error: ApiError = result.body as ApiError
