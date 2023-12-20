@@ -94,7 +94,7 @@ export function HomePage() {
                                             onChange={(event) => handleInputChange(event, table.uuid)}/>}
                                     </td>
                                 </tr>
-                                {table.entries.filter(entry => entry.user.uuid !== auth?.user?.uuid).sort((a, b) => a.user.name.localeCompare(b.user.name)).map(entry => (
+                                {table.entries.filter(entry => entry.user.uuid !== auth?.user?.uuid && entry.value.trim() !== "").sort((a, b) => a.user.name.localeCompare(b.user.name)).map(entry => (
                                     <tr key={entry.uuid}>
                                         <td className={"border px-2"}>
                                             <div className={"flex flex-row items-center justify-between"}>
